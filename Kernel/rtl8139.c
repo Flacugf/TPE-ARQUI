@@ -140,11 +140,11 @@ void sendMessage(uint8_t* str,uint8_t* address, uint16_t length) {
 }
 
 
-void print_mac(uint8_t * mac_dir){
+void printMac(uint8_t * mac){
   int size;
   char aux[30];
   for ( int i = 0 ; i < 6 ; i++ ){
-    size = parse_int(aux, mac_dir[i], 16);
+    size = parseInt(aux, mac, 16);
     if ( size == 1 ){
      ncPrint("0");
     }
@@ -173,7 +173,7 @@ digits(long number, int radix){
     return ans;
 }
 int
-parse_int(char * buffer, long number, int radix){
+parseInt(char * buffer, long number, int radix){
     int size, i, aux, aux_size;
 
 
@@ -226,7 +226,7 @@ void receiveMessage(){
     }
     ncNextline();
     ncPrint("Enviado Por:");
-    print_mac(&rtl.rxBuffer[10]);
+    printMac(&rtl.rxBuffer[10]);
     ncNextline();
     ncPrint((char*)&rtl.rxBuffer[18]);
     ncPrint(&rtl.rxBuffer[38]);
