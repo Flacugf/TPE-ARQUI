@@ -1,5 +1,6 @@
     #include <stdint.h>
     #include <naiveConsole.h>
+    #include <lib.h>
 
 void outb(uint16_t port, uint8_t value);
 void outd(uint16_t port, uint16_t value);
@@ -134,74 +135,15 @@ void sendMessage(uint8_t* str,uint8_t* address, uint16_t length) {
     status |= 0 << 13;
     status |= (0 & 0x3F) <<16;
     outq(statusAddress, (uint64_t)status);
-    rtl.txNum = (rtl.txNum+1)%4;
-    rtl.txNum &= 0x03;
 
 }
 
 
-void printMac(uint8_t * mac){
-  int size;
-  char aux[30];
-  for ( int i = 0 ; i < 6 ; i++ ){
-    size = parseInt(aux, mac, 16);
-    if ( size == 1 ){
-     ncPrint("0");
-    }
-    aux[size] = 0;
-    ncPrint(aux);
-    if ( i != 5 ){
-      ncPrint(":");
-    }
-  }
-}
-int
-digits(long number, int radix){
-    int ans = 0;
-    if (number == 0)
-        return 1;
 
-    if ( number < 0 ){
-        number *= -1;
-        ans++;
-    }
-
-    while ( number != 0 ){
-        number /= radix;
-        ans++;
-    }
-    return ans;
-}
-int
-parseInt(char * buffer, long number, int radix){
-    int size, i, aux, aux_size;
-
-
-    size = digits(number, radix);
-    aux_size = size;
-
-    if ( number < 0 ){
-        buffer[0] = '-';
-        number *= -1;
-        buffer++;
-        aux_size--;
-    }
-
-    for(i = aux_size - 1; i >= 0 ; i-- ){
-        aux = number % radix;
-        if ( aux >= 10 && aux <= 37){
-            buffer[i] = 'A'+(aux - 10);
-        }else{
-            buffer[i] = number % radix + '0';
-        }
-        number /= radix;
-    }
-    return size;
-}
 void receiveMessage(){
   uint16_t checkInt = ind(IOADDRESS + RTL_ISR);
   int size;
-  char aux[30];
+  char aux[30];  
   if ( (checkInt & IRQ_ROK_REG ) != 0){
     int whisp=1;
     int broad=1;
@@ -221,7 +163,6 @@ void receiveMessage(){
     if(!whisp && !broad){
       outd(IOADDRESS + RTL_ISR, IRQ_ROK_REG);
       setUpRTL();
-      outb(PIC_SLAVE_ADDR,PIC_ACKNOW);
       return;
     }
     ncNextline();
@@ -239,5 +180,4 @@ void receiveMessage(){
   }else {
     ncPrint("Error");
   }
-  outd(PIC_SLAVE_ADDR,PIC_ACKNOW);
 }

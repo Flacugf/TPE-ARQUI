@@ -110,8 +110,8 @@ int main()
 	setup_IDT_entry (0x2B, 0x08, &networkHandler, 0x8E);
 
 	//Turn on Interrupts
-	picMasterMask(0x00); 
-	picSlaveMask(0x00);
+	picMasterMask(0); 
+	picSlaveMask(0);
    	_sti();
    	ncClear();
 	changeColour();

@@ -4,7 +4,6 @@
 #include <video.h>
 #include <rtl.h>
 
-
 #define SYSTEM_CALL_READ 1
 #define SYSTEM_CALL_WRITE 2
 #define SYSTEM_CALL_WRITE_SLOW 3

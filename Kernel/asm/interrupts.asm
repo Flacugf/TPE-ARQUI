@@ -91,6 +91,9 @@ keyboardHandler:
     call keyboardHandlerC
     mov al, 0x20
     out 0x20, al
+
+    mov al, 20h
+    out 0xA0, al
     popall
     iretq
 
@@ -103,13 +106,19 @@ timerTickHandler:
     call timerTickHandlerC
     mov al,0x20
     out 0x20,al
+
+    mov al, 20h
+    out 0xA0, al
     popall
     iretq
 
 networkHandler:
     pushall
     call networkHandlerC
-    mov al,0x20
-    out 0x20, al
+    mov al,20h
+    out 20h, al
+
+    mov al, 20h
+    out 0xA0, al
     popall
     iretq

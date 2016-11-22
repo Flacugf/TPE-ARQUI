@@ -9,9 +9,9 @@ int keyFlag;
 int pianoFlag;
 int shiftFlag = 1;
 
-char keyboard[58] = {0,0,'1','2','3','4','5','6','7','8','9','0','-','=','\b'/*Backspace*/,0,
+char keyboard[61] = {0,0,'1','2','3','4','5','6','7','8','9','0','-','=','\b'/*Backspace*/,0,
 'q','w','e','r','t','y','u','i','o','p','[',']','\n',
-0/*Algo*/,'a','s','d','f','g','h','j','k','l',';','\'', 0 , 0 , 0 ,'\'','x','c','v','b','n','m',',','.','/',0,0,0,' '};
+0/*Algo*/,'a','s','d','f','g','h','j','k','l',';','\'', 0 , 0 , 0 ,'\'','x','c','v','b','n','m',',','.','/',0,0,0,' ',' ',' ',' '};
 
 char shiftKeyboard[58] = {0,0,'!','@','#','$','%','^','&','*','(',')','_','+','\b'/*Backspace*/,0,
 'Q','W','E','R','T','Y','U','I','O','P','{','}','\n',
@@ -233,7 +233,7 @@ void pianoMode(int character) {
 }
 
 void printKeys(int character) {
-	if(character != 0x1C && character != 0x0E && character < 57 && character != 0x2A && shiftFlag == 1){ 
+	if(character != 0x1C && character != 0x0E && character < 61 && character != 0x2A && shiftFlag == 1){ 
 		ncPrintChar(keyboard[character]);
 		addToBuffer(keyboard[character]);
 		keyFlag = 0;

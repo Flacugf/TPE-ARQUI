@@ -56,6 +56,63 @@ uint8_t* getAddress(const char* buffer){
 	return address;
 }
 
+void printMac(uint8_t * mac){
+  int size;
+  char aux[30];
+  for ( int i = 0 ; i < 6 ; i++ ){
+    size = parseInt(aux, mac[i], 16);
+    if ( size == 1 ){
+     ncPrint("0");
+    }
+    aux[size] = 0;
+    ncPrint(aux);
+    if ( i != 5 ){
+      ncPrint(":");
+    }
+  }
+}
+int digits(long number, int radix){
+    int ans = 0;
+    if (number == 0)
+        return 1;
+
+    if ( number < 0 ){
+        number *= -1;
+        ans++;
+    }
+
+    while ( number != 0 ){
+        number /= radix;
+        ans++;
+    }
+    return ans;
+}
+int parseInt(char * buffer, long number, int radix){
+    int size, i, aux, auxSize;
+
+
+    size = digits(number, radix);
+    auxSize = size;
+
+    if ( number < 0 ){
+        buffer[0] = '-';
+        number *= -1;
+        buffer++;
+        auxSize--;
+    }
+
+    for(i = auxSize - 1; i >= 0 ; i-- ){
+        aux = number % radix;
+        if ( aux >= 10 && aux <= 37){
+            buffer[i] = 'A'+(aux - 10);
+        }else{
+            buffer[i] = number % radix + '0';
+        }
+        number /= radix;
+    }
+    return size;
+}
+
 void * memcpy(void * destination, const void * source, uint64_t length)
 {
 	/*
